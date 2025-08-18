@@ -9,4 +9,5 @@ import java.util.List;
 public interface MovementRepository extends MongoRepository<Movement, String> {
     List<Movement> findByCustomerId(String customerId);
     List<Movement> findByProductId(String productId);
+    Movement findTopByOrderByIdDesc();
 }

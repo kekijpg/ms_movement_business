@@ -1,6 +1,5 @@
 [
   {
-    "id": "MOV0001",
     "customerId": "CUST001",
     "productId": "ACC001",
     "type": "DEPOSIT",
@@ -9,7 +8,6 @@
     "description": "Depósito de prueba"
   },
   {
-    "id": "MOV0002",
     "customerId": "CUST001",
     "productId": "CRED001",
     "type": "PAYMENT",

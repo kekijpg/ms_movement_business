@@ -11,16 +11,14 @@ import java.util.List;
 
 @Component
 public class MovementMapper {
-
-
     public static Movement fromRequest(MovementRequest request) {
         if (request == null) return null;
 
         Movement movement = new Movement();
-        movement.setId(null); // Mongo genera el ID
+        movement.setId(null);
         movement.setCustomerId(request.getCustomerId());
         movement.setProductId(request.getProductId());
-        movement.setType(request.getType()); // ahora es String
+        movement.setType(request.getType());
         movement.setAmount(request.getAmount());
         movement.setDate(request.getDate());
         movement.setDescription(request.getDescription());
@@ -28,7 +26,6 @@ public class MovementMapper {
         return movement;
     }
 
-    // De Movement -> MovementResponse
     public static MovementResponse toResponse(Movement movement) {
         if (movement == null) return null;
 
@@ -44,7 +41,6 @@ public class MovementMapper {
         return response;
     }
 
-    // Si quieres convertir listas completas
     public static List<MovementResponse> toResponseList(List<Movement> movements) {
         List<MovementResponse> responses = new ArrayList<>();
         if (movements != null) {
@@ -54,5 +50,4 @@ public class MovementMapper {
         }
         return responses;
     }
-
 }
