@@ -1,0 +1,173 @@
+openapi: 3.0.1
+info:
+  title: Movement API
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8082
+
+paths:
+  /movements:
+    get:
+      summary: Listar todos los movimientos
+      operationId: getAllMovements
+      responses:
+        '200':
+          description: Lista de movimientos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementResponse'
+
+    post:
+      summary: Crear un movimiento
+      operationId: createMovement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementRequest'
+      responses:
+        '201':
+          description: Movimiento creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovementResponse'
+
+  /movements/{id}:
+    get:
+      summary: Obtener movimiento por ID
+      operationId: getMovementById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movimiento encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovementResponse'
+    put:
+      summary: Actualizar movimiento
+      operationId: updateMovement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementRequest'
+      responses:
+        '200':
+          description: Movimiento actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovementResponse'
+    delete:
+      summary: Eliminar movimiento
+      operationId: deleteMovement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Movimiento eliminado
+
+  /movements/customer/{customerId}:
+    get:
+      summary: Obtener movimientos por customerId
+      operationId: getMovementsByCustomerId
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de movimientos del cliente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementResponse'
+
+  /movements/product/{productId}:
+    get:
+      summary: Obtener movimientos por productId
+      operationId: getMovementsByProductId
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de movimientos del producto
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementResponse'
+
+components:
+  schemas:
+    MovementRequest:
+      type: object
+      required:
+        - customerId
+        - productId
+        - type
+        - amount
+      properties:
+        customerId:
+          type: string
+        productId:
+          type: string
+        type:
+          type: string
+
+        amount:
+          type: string
+        date:
+          type: string
+        description:
+          type: string
+
+    MovementResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        productId:
+          type: string
+        type:
+          type: string
+        amount:
+          type: string
+        date:
+          type: string
+        description:
+          type: string

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "MOV0001",
+    "customerId": "CUST001",
+    "productId": "ACC001",
+    "type": "DEPOSIT",
+    "amount": "200.00",
+    "date": "2025-08-16T10:00:00Z",
+    "description": "Depósito de prueba"
+  },
+  {
+    "id": "MOV0002",
+    "customerId": "CUST001",
+    "productId": "CRED001",
+    "type": "PAYMENT",
+    "amount": "100.00",
+    "date": "2025-08-16T12:30:00Z",
+    "description": "Pago de cuota crédito"
+  }
+]
