@@ -1,4 +1,4 @@
-package com.ms_movement_business;
+package com.ms.movement.business;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

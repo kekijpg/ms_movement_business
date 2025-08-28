@@ -1,11 +1,10 @@
-package com.ms_movement_business.mapper;
+package com.ms.movement.business.mapper;
 
-import com.ms_movement_business.model.MovementRequest;
-import com.ms_movement_business.model.MovementResponse;
-import com.ms_movement_business.entity.Movement;
+import com.ms.movement.business.model.MovementRequest;
+import com.ms.movement.business.model.MovementResponse;
+import com.ms.movement.business.entity.Movement;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +14,18 @@ public class MovementMapper {
         if (request == null) return null;
 
         Movement movement = new Movement();
-        movement.setId(null);
+        movement.setId(null); // La DB lo generará
+
         movement.setCustomerId(request.getCustomerId());
         movement.setProductId(request.getProductId());
-        movement.setType(request.getType());
+
+        // Manejo de enum -> String
+        if (request.getType() != null) {
+            movement.setType(request.getType().toString());
+        } else {
+            movement.setType(null);
+        }
+
         movement.setAmount(request.getAmount());
         movement.setDate(request.getDate());
         movement.setDescription(request.getDescription());
@@ -33,7 +40,18 @@ public class MovementMapper {
         response.setId(movement.getId());
         response.setCustomerId(movement.getCustomerId());
         response.setProductId(movement.getProductId());
-        response.setType(movement.getType());
+
+        // Manejo seguro de String → Enum
+        if (movement.getType() != null) {
+            try {
+                response.setType(MovementResponse.TypeEnum.fromValue(movement.getType()));
+            } catch (IllegalArgumentException ex) {
+                response.setType(null);
+            }
+        } else {
+            response.setType(null);
+        }
+
         response.setAmount(movement.getAmount());
         response.setDate(movement.getDate());
         response.setDescription(movement.getDescription());

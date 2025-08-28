@@ -1,4 +1,4 @@
-package com.ms_movement_business;
+package com.ms.movement.business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

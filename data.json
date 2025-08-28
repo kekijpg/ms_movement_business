@@ -1,18 +1,8 @@
-[
-  {
-    "customerId": "CUST001",
-    "productId": "ACC001",
-    "type": "DEPOSIT",
-    "amount": "200.00",
-    "date": "2025-08-16T10:00:00Z",
-    "description": "Depósito de prueba"
-  },
-  {
-    "customerId": "CUST001",
-    "productId": "CRED001",
-    "type": "PAYMENT",
-    "amount": "100.00",
-    "date": "2025-08-16T12:30:00Z",
-    "description": "Pago de cuota crédito"
-  }
-]
+{
+  "id": "M001",
+  "productId": "P001",
+  "customerId": "C001",
+  "type": "COMMISSION",
+  "amount": 50.0,
+  "date": "2025-08-27T14:30:00"
+}
