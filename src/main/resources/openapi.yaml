@@ -132,14 +132,6 @@ components:
           type: string
         description:
           type: string
-        commissionAmount:
-          type: number
-        relatedAccountId:
-          type: string
-        correlationId:
-          type: string
-        commission:
-          type: number
 
     MovementResponse:
       type: object
@@ -159,11 +151,3 @@ components:
           type: string
         description:
           type: string
-        commissionAmount:
-          type: number
-        relatedAccountId:
-          type: string
-        correlationId:
-          type: string
-        commission:
-          type: number

@@ -14,7 +14,7 @@ public class MovementMapper {
         if (request == null) return null;
 
         Movement movement = new Movement();
-        movement.setId(null); // La DB lo generará
+        movement.setId(null);
 
         movement.setCustomerId(request.getCustomerId());
         movement.setProductId(request.getProductId());

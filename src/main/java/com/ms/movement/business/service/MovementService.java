@@ -25,9 +25,5 @@ public interface MovementService {
     Mono<Void> delete(String movementId);
 
     Flux<Movement> getByCustomer(String customerId);
-    Mono<Void> transfer(String fromAccountId, String toAccountId, BigDecimal amount);
-    Flux<Movement> getMovementsByAccount(String accountId);
-    Flux<Movement> getCommissionsByProduct(String productId, String startDate, String endDate);
-
 }
 

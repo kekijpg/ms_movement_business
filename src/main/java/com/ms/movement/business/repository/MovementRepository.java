@@ -13,5 +13,4 @@ import java.util.List;
 public interface MovementRepository extends ReactiveMongoRepository<Movement, String> {
     //genera la consulta por SpringData
     Flux<Movement> findByCustomerId(String customerId);
-    Flux<Movement> findByProductId(String productId);
 }

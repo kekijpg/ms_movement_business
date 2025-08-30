@@ -25,8 +25,4 @@ public class Movement {
     private BigDecimal amount;
     private String date;
     private String description;
-    private BigDecimal commissionAmount;    //monto de la comision
-    private BigDecimal commission;          //max de movimiento
-    private String relatedAccountId;        //cuenta destino si es una transferencia
-    private String correlationId;           //rastrear transacciones
 }
