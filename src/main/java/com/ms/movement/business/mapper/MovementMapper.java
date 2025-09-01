@@ -4,14 +4,15 @@ import com.ms.movement.business.model.MovementRequest;
 import com.ms.movement.business.model.MovementResponse;
 import com.ms.movement.business.entity.Movement;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class MovementMapper {
     public static Movement fromRequest(MovementRequest request) {
-        if (request == null) return null;
+        if (request == null) {
+            return null;
+        }
 
         Movement movement = new Movement();
         movement.setId(null);
@@ -34,7 +35,9 @@ public class MovementMapper {
     }
 
     public static MovementResponse toResponse(Movement movement) {
-        if (movement == null) return null;
+        if (movement == null) {
+            return null;
+        }
 
         MovementResponse response = new MovementResponse();
         response.setId(movement.getId());

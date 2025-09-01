@@ -1,16 +1,13 @@
-package com.ms.movement.business.Impl;
+package com.ms.movement.business.impl;
 
 import com.ms.movement.business.entity.Movement;
 import com.ms.movement.business.repository.MovementRepository;
 import com.ms.movement.business.service.MovementService;
-
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 
@@ -60,4 +57,10 @@ public class MovementServiceImpl implements MovementService {
         return movementRepository.findByCustomerId(customerId);
     }
 
+    @Override
+    public Flux<Movement> getLast10Movements(String productId) {
+        return movementRepository.findTop10ByOrderByDateDesc()
+                .sort((a, b) -> b.getDate().compareTo(a.getDate()))
+                .take(10);
+    }
 }

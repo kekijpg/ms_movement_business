@@ -1,12 +1,11 @@
-package com.ms.movement.business.Impl;
+package com.ms.movement.business.impl;
 
 import com.ms.movement.business.api.MovementsApi;
 import com.ms.movement.business.service.MovementService;
-import com.ms.movement.business.entity.Movement;
 import com.ms.movement.business.mapper.MovementMapper;
 import com.ms.movement.business.model.MovementRequest;
 import com.ms.movement.business.model.MovementResponse;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +18,8 @@ import reactor.core.publisher.Mono;
 public class MovementApiImpl implements MovementsApi {
     private final MovementService movementService;
 
-    public MovementApiImpl(MovementService movementService) {
+    @Autowired
+    public MovementApiImpl(MovementService movementService, MovementMapper movementMapper) {
         this.movementService = movementService;
     }
 
@@ -70,5 +70,15 @@ public class MovementApiImpl implements MovementsApi {
     public Mono<ResponseEntity<Void>> deleteMovement(String id, ServerWebExchange exchange) {
         return movementService.delete(id)
                 .then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
+    @Override
+    public Mono<ResponseEntity<Flux<MovementResponse>>> getLast10Movements(
+            String productId, ServerWebExchange exchange) {
+
+        Flux<MovementResponse> responses = movementService.getLast10Movements(productId)
+                .map(MovementMapper::toResponse);
+
+        return Mono.just(ResponseEntity.ok(responses));
     }
 }

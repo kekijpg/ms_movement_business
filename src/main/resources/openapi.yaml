@@ -110,6 +110,26 @@ paths:
                 items:
                   $ref: '#/components/schemas/MovementResponse'
 
+  /movements/last10/{productId}:
+    get:
+      summary: Obtener los últimos 10 movimientos por producto
+      operationId: getLast10Movements
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de últimos 10 movimientos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementResponse'
+
 components:
   schemas:
     MovementRequest:
