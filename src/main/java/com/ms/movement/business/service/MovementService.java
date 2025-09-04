@@ -1,8 +1,11 @@
 package com.ms.movement.business.service;
 
 import com.ms.movement.business.entity.Movement;
+import com.ms.movement.business.model.MovementReportResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Instant;
 
 public interface MovementService {
     // registra un movimiento
@@ -23,5 +26,7 @@ public interface MovementService {
     Flux<Movement> getByCustomer(String customerId);
 
     Flux<Movement> getLast10Movements(String productId);
+
+    Mono<MovementReportResponse> generateReport(String productId, Instant startDate, Instant endDate);
 }
 

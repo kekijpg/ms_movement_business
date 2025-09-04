@@ -1,13 +1,15 @@
 package com.ms.movement.business.impl;
 
 import com.ms.movement.business.entity.Movement;
+import com.ms.movement.business.mapper.MovementMapper;
+import com.ms.movement.business.model.MovementReportResponse;
 import com.ms.movement.business.repository.MovementRepository;
 import com.ms.movement.business.service.MovementService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Service
 
@@ -20,7 +22,9 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public Mono<Movement> create(Movement movement) {
-        movement.setDate(LocalDate.now().toString());
+        if (movement.getDate() == null) {
+            movement.setDate(Instant.now());
+        }
         return movementRepository.save(movement);
     }
 
@@ -42,7 +46,7 @@ public class MovementServiceImpl implements MovementService {
                     existing.setType(movement.getType());
                     existing.setCustomerId(movement.getCustomerId());
                     existing.setProductId(movement.getProductId());
-                    existing.setDate(LocalDate.now().toString());
+                    existing.setDate(Instant.now());
                     return movementRepository.save(existing);
                 });
     }
@@ -59,8 +63,22 @@ public class MovementServiceImpl implements MovementService {
 
     @Override
     public Flux<Movement> getLast10Movements(String productId) {
-        return movementRepository.findTop10ByOrderByDateDesc()
-                .sort((a, b) -> b.getDate().compareTo(a.getDate()))
+        return movementRepository.findByProductIdOrderByDateDesc(productId)
                 .take(10);
+    }
+
+    @Override
+    public Mono<MovementReportResponse> generateReport(String productId, Instant startDate, Instant endDate) {
+        return movementRepository.findByProductIdAndDateBetween(productId, startDate, endDate)
+                .map(MovementMapper::toResponse)
+                .collectList()
+                .map(responses -> {
+                    MovementReportResponse report = new MovementReportResponse();
+                    report.setProductId(productId);
+                    report.setStartDate(startDate.toString());
+                    report.setEndDate(endDate.toString());
+                    report.setMovements(responses);
+                    return report;
+                });
     }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public class Movement {
 
     private BigDecimal amount;
 
-    private String date;
+    private Instant date;
 
     private String description;
 }

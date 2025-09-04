@@ -1,6 +1,7 @@
 package com.ms.movement.business.impl;
 
 import com.ms.movement.business.api.MovementsApi;
+import com.ms.movement.business.model.MovementReportResponse;
 import com.ms.movement.business.service.MovementService;
 import com.ms.movement.business.mapper.MovementMapper;
 import com.ms.movement.business.model.MovementRequest;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Instant;
 
 @Component
 @RestController
@@ -80,5 +83,20 @@ public class MovementApiImpl implements MovementsApi {
                 .map(MovementMapper::toResponse);
 
         return Mono.just(ResponseEntity.ok(responses));
+    }
+
+    @Override
+    public Mono<ResponseEntity<MovementReportResponse>> getMovementReport(
+            String productId,
+            String startDate,
+            String endDate,
+            ServerWebExchange exchange) {
+
+        Instant start = Instant.parse(startDate);
+        Instant end   = Instant.parse(endDate);
+
+        return movementService.generateReport(productId, start, end)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 }

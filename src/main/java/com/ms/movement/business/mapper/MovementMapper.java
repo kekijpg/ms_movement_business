@@ -4,6 +4,12 @@ import com.ms.movement.business.model.MovementRequest;
 import com.ms.movement.business.model.MovementResponse;
 import com.ms.movement.business.entity.Movement;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +34,22 @@ public class MovementMapper {
         }
 
         movement.setAmount(request.getAmount());
-        movement.setDate(request.getDate());
+
+        //Manejo flexible de fecha: con o sin Z
+        if (request.getDate() != null) {
+            try {
+                // Caso 1: viene con Z o con offset (ej: 2025-09-02T20:00:00Z o 2025-09-02T20:00:00-05:00)
+                movement.setDate(Instant.parse(request.getDate()));
+            } catch (DateTimeParseException ex) {
+                // Caso 2: viene sin zona (ej: 2025-09-02T20:00:00)
+                movement.setDate(
+                        LocalDateTime.parse(request.getDate())
+                                .atZone(ZoneOffset.UTC)
+                                .toInstant()
+                );
+            }
+        }
+
         movement.setDescription(request.getDescription());
 
         return movement;
@@ -56,7 +77,17 @@ public class MovementMapper {
         }
 
         response.setAmount(movement.getAmount());
-        response.setDate(movement.getDate());
+
+        if (movement.getDate() != null) {
+            response.setDate(
+                    movement.getDate()
+                            .atZone(ZoneId.of("America/Lima"))
+                            .toOffsetDateTime()
+            );
+        } else {
+            response.setDate(null);
+        }
+
         response.setDescription(movement.getDescription());
 
         return response;

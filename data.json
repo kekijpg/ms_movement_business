@@ -4,63 +4,154 @@
     "customerId": "CUST001",
     "type": "DEPOSITO",
     "amount": 120.00,
-    "date": "2025-08-30",
+    "date": "2025-08-30T14:15:00Z",
     "description": "Pago de cuota crédito"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "RETIRO",
+    "amount": 50.00,
+    "date": "2025-08-30T17:30:00Z",
+    "description": "Retiro en cajero automático"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "TRANSFERENCIA",
+    "amount": 200.00,
+    "date": "2025-08-30T23:45:00Z",
+    "description": "Transferencia a cuenta de ahorro"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "DEPOSITO",
+    "amount": 90.00,
+    "date": "2025-08-31T15:00:00Z",
+    "description": "Depósito en ventanilla"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "RETIRO",
+    "amount": 70.00,
+    "date": "2025-08-31T18:20:00Z",
+    "description": "Pago en supermercado"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "DEPOSITO",
+    "amount": 110.00,
+    "date": "2025-09-01T13:10:00Z",
+    "description": "Depósito por devolución de impuestos"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "TRANSFERENCIA",
+    "amount": 450.00,
+    "date": "2025-09-01T20:30:00Z",
+    "description": "Transferencia a préstamo personal"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "DEPOSITO",
+    "amount": 300.00,
+    "date": "2025-09-02T14:00:00Z",
+    "description": "Pago parcial de crédito"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "RETIRO",
+    "amount": 40.00,
+    "date": "2025-09-02T16:45:00Z",
+    "description": "Compra en gasolinera"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "DEPOSITO",
+    "amount": 500.00,
+    "date": "2025-09-02T21:20:00Z",
+    "description": "Depósito en ventanilla"
+  },
+  {
+    "productId": "CRED001",
+    "customerId": "CUST001",
+    "type": "TRANSFERENCIA",
+    "amount": 600.00,
+    "date": "2025-09-03T01:00:00Z",
+    "description": "Transferencia interbancaria"
+  },
+
+  {
+    "productId": "CRED002",
+    "customerId": "CUST002",
+    "type": "DEPOSITO",
+    "amount": 200.00,
+    "date": "2025-09-01T19:00:00Z",
+    "description": "Pago parcial de crédito"
   },
   {
     "productId": "CRED002",
     "customerId": "CUST002",
     "type": "RETIRO",
-    "amount": 50.00,
-    "date": "2025-08-31",
-    "description": "Retiro en cajero automático"
+    "amount": 80.00,
+    "date": "2025-09-02T15:15:00Z",
+    "description": "Compra en supermercado"
   },
+  {
+    "productId": "CRED002",
+    "customerId": "CUST002",
+    "type": "TRANSFERENCIA",
+    "amount": 500.00,
+    "date": "2025-09-02T23:30:00Z",
+    "description": "Pago de servicios"
+  },
+
   {
     "productId": "DEBIT001",
     "customerId": "CUST003",
     "type": "DEPOSITO",
     "amount": 300.00,
-    "date": "2025-08-29",
+    "date": "2025-08-29T14:40:00Z",
     "description": "Depósito en ventanilla"
   },
   {
-    "productId": "DEBIT002",
-    "customerId": "CUST001",
+    "productId": "DEBIT001",
+    "customerId": "CUST003",
     "type": "TRANSFERENCIA",
-    "amount": 200.00,
-    "date": "2025-08-28",
-    "description": "Transferencia a cuenta de ahorro"
+    "amount": 150.00,
+    "date": "2025-09-01T21:00:00Z",
+    "description": "Transferencia recibida"
   },
   {
-    "productId": "CRED003",
+    "productId": "DEBIT001",
+    "customerId": "CUST003",
+    "type": "RETIRO",
+    "amount": 100.00,
+    "date": "2025-09-02T16:00:00Z",
+    "description": "Retiro en cajero automático"
+  },
+
+  {
+    "productId": "DEBIT002",
     "customerId": "CUST004",
     "type": "DEPOSITO",
-    "amount": 150.00,
-    "date": "2025-08-30",
-    "description": "Pago parcial de crédito"
+    "amount": 400.00,
+    "date": "2025-09-01T15:30:00Z",
+    "description": "Pago de nómina"
   },
   {
-    "productId": "DEBIT003",
-    "customerId": "CUST002",
-    "type": "RETIRO",
-    "amount": 80.00,
-    "date": "2025-08-31",
-    "description": "Compra en supermercado"
-  },
-  {
-    "productId": "CRED004",
-    "customerId": "CUST005",
+    "productId": "DEBIT002",
+    "customerId": "CUST004",
     "type": "TRANSFERENCIA",
-    "amount": 500.00,
-    "date": "2025-08-27",
-    "description": "Transferencia de pago préstamo"
-  },
-  {
-    "productId": "DEBIT004",
-    "customerId": "CUST003",
-    "type": "DEPOSITO",
-    "amount": 220.00,
-    "date": "2025-08-29",
-    "description": "Depósito por devolución de impuestos"
+    "amount": 250.00,
+    "date": "2025-09-02T19:50:00Z",
+    "description": "Transferencia a cuenta de ahorro"
   }
 ]
