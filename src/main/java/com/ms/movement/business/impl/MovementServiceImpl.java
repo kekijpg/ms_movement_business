@@ -16,8 +16,12 @@ import java.time.Instant;
 public class MovementServiceImpl implements MovementService {
     private final MovementRepository movementRepository;
 
-    public MovementServiceImpl(MovementRepository movementRepository) {
+    private final MovementMapper movementMapper;
+
+    public MovementServiceImpl(MovementRepository movementRepository, MovementMapper movementMapper) {
+
         this.movementRepository = movementRepository;
+        this.movementMapper = movementMapper;
     }
 
     @Override
@@ -70,14 +74,14 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public Mono<MovementReportResponse> generateReport(String productId, Instant startDate, Instant endDate) {
         return movementRepository.findByProductIdAndDateBetween(productId, startDate, endDate)
-                .map(MovementMapper::toResponse)
+                .map(movementMapper::toResponse)
                 .collectList()
-                .map(responses -> {
+                .map(list -> {
                     MovementReportResponse report = new MovementReportResponse();
                     report.setProductId(productId);
                     report.setStartDate(startDate.toString());
                     report.setEndDate(endDate.toString());
-                    report.setMovements(responses);
+                    report.setMovements(list);
                     return report;
                 });
     }

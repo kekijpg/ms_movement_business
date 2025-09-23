@@ -111,6 +111,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
@@ -225,7 +231,10 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                **/target/**, **/config/**, **/MsMovementBusinessApplication.java, **/MsMovementBusinessApplicationTests.java
+                                <exclude>**/target/**</exclude>
+                                <exclude>**/config/**</exclude>
+                                <exclude>**/MsMovementBusinessApplication.java</exclude>
+                                <exclude>**/MsMovementBusinessApplicationTests.java</exclude>
                             </excludes>
                             <rules>
                                 <rule>
@@ -234,7 +243,7 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.0</minimum>
+                                            <minimum>0.20</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

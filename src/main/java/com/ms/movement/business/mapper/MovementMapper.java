@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 public class MovementMapper {
-    public static Movement fromRequest(MovementRequest request) {
+    public Movement fromRequest(MovementRequest request) {
         if (request == null) {
             return null;
         }
@@ -55,7 +55,7 @@ public class MovementMapper {
         return movement;
     }
 
-    public static MovementResponse toResponse(Movement movement) {
+    public MovementResponse toResponse(Movement movement) {
         if (movement == null) {
             return null;
         }
@@ -93,7 +93,7 @@ public class MovementMapper {
         return response;
     }
 
-    public static List<MovementResponse> toResponseList(List<Movement> movements) {
+    public List<MovementResponse> toResponseList(List<Movement> movements) {
         List<MovementResponse> responses = new ArrayList<>();
         if (movements != null) {
             for (Movement m : movements) {

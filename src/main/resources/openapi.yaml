@@ -7,7 +7,7 @@ servers:
   - url: http://localhost:8082
 
 paths:
-  /movements:
+  /api/movements:
     get:
       summary: Listar todos los movimientos
       operationId: getAllMovements
@@ -38,7 +38,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/MovementResponse'
 
-  /movements/{id}:
+  /api/movements/{id}:
     get:
       summary: Obtener movimiento por ID
       operationId: getMovementById
@@ -90,7 +90,7 @@ paths:
         '204':
           description: Movimiento eliminado
 
-  /movements/customer/{customerId}:
+  /api/movements/customer/{customerId}:
     get:
       summary: Obtener movimientos por customerId
       operationId: getMovementsByCustomerId
@@ -110,7 +110,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/MovementResponse'
 
-  /movements/last10/{productId}:
+  /api/movements/last10/{productId}:
     get:
       summary: Obtener los últimos 10 movimientos por producto
       operationId: getLast10Movements
@@ -130,7 +130,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/MovementResponse'
 
-  /movements/report/{productId}:
+  /api/movements/report/{productId}:
     get:
       summary: Generar reporte de movimientos por producto en rango de fechas
       operationId: getMovementReport
