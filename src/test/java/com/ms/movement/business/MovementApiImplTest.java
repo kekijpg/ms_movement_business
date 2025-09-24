@@ -2,10 +2,10 @@ package com.ms.movement.business;
 
 import com.ms.movement.business.impl.MovementApiImpl;
 import com.ms.movement.business.mapper.MovementMapper;
+import com.ms.movement.business.entity.Movement;
 import com.ms.movement.business.model.MovementReportResponse;
 import com.ms.movement.business.model.MovementRequest;
 import com.ms.movement.business.model.MovementResponse;
-import com.ms.movement.business.entity.Movement;
 import com.ms.movement.business.service.MovementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,6 +98,23 @@ class MovementApiImplTest {
         verify(movementService).create(any());
     }
 
+    // el service falla => 5xx (propaga error)
+    @Test
+    void createMovementShouldPropagateServerError() {
+        when(movementMapper.fromRequest(any(MovementRequest.class))).thenReturn(movementEntity);
+        when(movementService.create(movementEntity))
+                .thenReturn(Mono.error(new RuntimeException("boom"))); // simulamos fallo
+
+        webTestClient.post()
+                .uri("/api/movements")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(movementRequest)
+                .exchange()
+                .expectStatus().is5xxServerError(); //da error
+
+        verify(movementService).create(any());
+    }
+
     @Test
     void getAllMovementsShouldReturnOk() {
         when(movementService.getAll()).thenReturn(Flux.just(movementEntity));
@@ -112,6 +129,18 @@ class MovementApiImplTest {
                 .contains(movementResponse);
 
         verify(movementService).getAll();
+    }
+
+    @Test
+    void getAllMovementsShouldReturnOkWithEmptyList() {
+        when(movementService.getAll()).thenReturn(Flux.empty());
+
+        webTestClient.get()
+                .uri("/api/movements")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(MovementResponse.class)
+                .hasSize(0);
     }
 
     @Test
@@ -142,6 +171,18 @@ class MovementApiImplTest {
     }
 
     @Test
+    void getMovementsByCustomerShouldReturnOkWithEmptyList() {
+        when(movementService.getByCustomer("CUS-EMPTY")).thenReturn(Flux.empty());
+
+        webTestClient.get()
+                .uri("/api/movements/customer/CUS-EMPTY")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(MovementResponse.class)
+                .hasSize(0);
+    }
+
+    @Test
     void updateMovementShouldReturnOk() {
         when(movementMapper.fromRequest(any(MovementRequest.class))).thenReturn(movementEntity);
         when(movementService.update(eq("MOV-1"), any())).thenReturn(Mono.just(movementEntity));
@@ -157,6 +198,22 @@ class MovementApiImplTest {
                 .isEqualTo(movementResponse);
 
         verify(movementService).update(eq("MOV-1"), any());
+    }
+
+    //service devuelve Mono.empty()
+    @Test
+    void updateMovementShouldReturnNotFoundWhenServiceReturnsEmpty() {
+        when(movementMapper.fromRequest(any(MovementRequest.class))).thenReturn(movementEntity);
+        when(movementService.update(eq("MOV-404"), any())).thenReturn(Mono.empty());
+
+        webTestClient.put()
+                .uri("/api/movements/MOV-404")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(movementRequest)
+                .exchange()
+                .expectStatus().isNotFound();
+
+        verify(movementService).update(eq("MOV-404"), any());
     }
 
     @Test
@@ -227,5 +284,24 @@ class MovementApiImplTest {
                 .expectStatus().isOk()
                 .expectBody(MovementReportResponse.class)
                 .isEqualTo(report);
+    }
+
+    //el service devuelve Mono.empty()
+    @Test
+    void getMovementReportShouldReturnNoContentWhenServiceReturnsEmpty() {
+        when(movementService.generateReport(
+                eq("PROD-EMPTY"),
+                eq(Instant.parse("2024-01-01T00:00:00Z")),
+                eq(Instant.parse("2024-12-31T23:59:59Z"))
+        )).thenReturn(Mono.empty());
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/api/movements/report/PROD-EMPTY")
+                        .queryParam("startDate", "2024-01-01T00:00:00Z")
+                        .queryParam("endDate", "2024-12-31T23:59:59Z")
+                        .build())
+                .exchange()
+                .expectStatus().isNoContent(); //204
     }
 }

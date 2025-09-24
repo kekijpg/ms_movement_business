@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ms-movement-business
+
+  profiles:
+    active: prod
+  config:
+    import: "optional:configserver:"

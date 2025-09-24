@@ -126,6 +126,11 @@ class MovementMapperTest {
     }
 
     @Test
+    void fromRequestReturnsNullWhenRequestIsNull() {
+        assertNull(mapper.fromRequest(null));
+    }
+
+    @Test
     void toResponseListShouldMapAll() {
         Movement a = new Movement();
         a.setId("A");
@@ -142,6 +147,46 @@ class MovementMapperTest {
         assertEquals(MovementResponse.TypeEnum.DEPOSITO, list.get(0).getType());
         assertEquals("B", list.get(1).getId());
         assertEquals(MovementResponse.TypeEnum.RETIRO, list.get(1).getType());
+    }
+
+    @Test
+    void toResponseSetsNullTypeWhenMovementTypeIsInvalid() {
+        Movement m = new Movement();
+        m.setId("ID-1");
+        m.setCustomerId("C3");
+        m.setProductId("P3");
+        m.setType("NO_EXISTE");
+        m.setAmount(new BigDecimal("7.5"));
+        m.setDate(Instant.parse("2024-01-01T00:00:00Z"));
+        m.setDescription("x");
+
+        MovementResponse resp = mapper.toResponse(m);
+
+        assertNotNull(resp);
+        assertNull(resp.getType());
+        assertEquals("ID-1", resp.getId());
+        assertEquals("C3", resp.getCustomerId());
+        assertEquals("P3", resp.getProductId());
+        assertEquals(new BigDecimal("7.5"), resp.getAmount());
+        assertNotNull(resp.getDate());
+        assertEquals("x", resp.getDescription());
+    }
+
+    void toResponseSetsNullDateWhenMovementDateIsNull() {
+        Movement m = new Movement();
+        m.setId("ID-2");
+        m.setCustomerId("C4");
+        m.setProductId("P4");
+        m.setType("DEPOSITO");
+        m.setAmount(new BigDecimal("1.00"));
+        m.setDate(null); // <- rama
+        m.setDescription("y");
+
+        MovementResponse resp = mapper.toResponse(m);
+
+        assertNotNull(resp);
+        assertEquals(MovementResponse.TypeEnum.DEPOSITO, resp.getType());
+        assertNull(resp.getDate());
     }
 
 }
